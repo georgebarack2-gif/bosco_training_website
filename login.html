@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bosco K9 Login</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* Removes unwanted browser spacing */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Styles the whole page background matching the signup design */
+        body {
+            font-family: 'Poppins', sans-serif;
+            height: 100vh;
+            background-image: url('signup.jpeg'); /* Reuses your background image */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Main login glass-effect container */
+        .form-container {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 40px;
+            border-radius: 20px;
+            width: 400px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            color: white;
+        }
+
+        /* Form heading styling */
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 32px;
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
+
+        /* Labels */
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        /* Input boxes */
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        /* Input focus golden glow effect */
+        input:focus {
+            outline: none;
+            box-shadow: 0 0 10px #FFD700;
+        }
+
+        /* Action button styling */
+        button {
+            width: 100%;
+            padding: 14px;
+            background: #FFD700;
+            color: black;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        /* Hover animation effect */
+        button:hover {
+            background: #ffcc00;
+            transform: scale(1.03);
+        }
+
+        /* Redirect helper text */
+        .signup-text {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        /* Redirect link styling */
+        .signup-text a {
+            color: #FFD700;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .signup-text a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="form-container">
+        <h2>Welcome Back</h2>
+
+        <form>
+            <label>Email Address</label>
+            <input type="email" 
+                   name="email" 
+                   placeholder="Enter your email" 
+                   required>
+
+            <label>Password</label>
+            <input type="password" 
+                   name="password" 
+                   placeholder="Enter your password" 
+                   required>
+
+            <button type="submit">Login</button>
+        </form>
+
+        <div class="signup-text">
+            New client? 
+            <a href="book.html">Book a session to get started</a>
+        </div>
+    </div>
+
+    <script>
+        const form = document.querySelector('form');
+
+        form.addEventListener('submit', async function(event) {
+            event.preventDefault(); // Prevents page reload on click
+
+            // 1. Extract values entered by user
+            const email = form.email.value;
+            const password = form.password.value;
+
+            // 2. Package data together
+            const loginData = { email, password };
+
+            try {
+                // 3. Send credentials to Node.js backend server
+                const response = await fetch('http://localhost:3000/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(loginData)
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    alert(result.message); // Displays "Login successful!"
+
+                    // 4. Save login state to browser memory so pages remember them
+                    localStorage.setItem('isLoggedIn', 'true');
+                    localStorage.setItem('userName', result.user.fullname);
+                    localStorage.setItem('userEmail', result.user.email);
+
+                    // 5. Redirect user to your main landing index or dashboard page
+                    window.location.href = "index.html"; 
+                } else {
+                    // Displays errors like "Invalid Email or Password!"
+                    alert(result.message); 
+                }
+
+            } catch (error) {
+                console.error('Connection Error:', error);
+                alert('Could not connect to the backend server. Ensure node server.js is running.');
+            }
+        });
+    </script>
+
+</body>
+</html>

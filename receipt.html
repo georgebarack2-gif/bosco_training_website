@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservation Secured - PawTrack</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background-color: #121212; font-family: system-ui, -apple-system, sans-serif; }
+        .x-small { font-size: 0.75rem; letter-spacing: 0.3px; }
+    </style>
+</head>
+<body class="d-flex align-items-center min-vh-100">
+
+<div class="container my-5 d-flex justify-content-center">
+    <div class="card bg-dark text-light border-secondary border-opacity-25 p-4 text-center" style="max-width: 450px; border-radius: 16px;">
+        
+        <!-- Animated Success Icon -->
+        <div class="mb-3">
+            <i class="fa-solid fa-circle-check text-success display-4"></i>
+        </div>
+        
+        <h4 class="fw-bold text-success mb-1">Reservation Secured!</h4>
+        <p class="text-secondary small">Your 10% commitment deposit has been verified.</p>
+        
+        <!-- The Dynamic Receipt Pass Box -->
+        <div class="bg-black p-3 rounded border border-secondary border-opacity-50 my-3 text-start">
+            <div class="text-center border-bottom border-secondary border-opacity-25 pb-2 mb-2">
+                <span class="x-small tracking-wider text-uppercase text-warning fw-bold">PawTrack Digital Pickup Pass</span>
+            </div>
+            
+            <div class="d-flex justify-content-between small mb-1">
+                <span class="text-secondary">Buyer Name:</span>
+                <span class="fw-semibold" id="receipt-buyer-name">Barack Obama</span>
+            </div>
+            <div class="d-flex justify-content-between small mb-1">
+                <span class="text-secondary">Verified Phone:</span>
+                <span class="fw-semibold" id="receipt-phone">+254 700415115</span>
+            </div>
+            <div class="d-flex justify-content-between small mb-1">
+                <span class="text-secondary">Reserved Item:</span>
+                <span class="fw-semibold text-info" id="receipt-dog-name">Max (German Shepherd)</span>
+            </div>
+            <div class="d-flex justify-content-between small mb-1">
+                <span class="text-secondary">M-Pesa Receipt:</span>
+                <span class="fw-bold text-light" id="receipt-mpesa-code">RKF4M7PQ9S</span>
+            </div>
+            
+            <hr class="border-secondary opacity-25 my-2">
+            
+            <div class="d-flex justify-content-between text-success font-monospace small">
+                <span>Balance Due at Yard:</span>
+                <span class="fw-bold" id="receipt-balance">KES 40,500</span>
+            </div>
+            <div class="d-flex justify-content-between text-danger font-monospace small mt-1" style="font-size: 0.72rem;">
+                <span>Hold Auto-Expires:</span>
+                <span id="receipt-expiry">17th June 2026, 10:45 PM</span>
+            </div>
+        </div>
+
+        <!-- Action Button to connect them via the protected WhatsApp line -->
+        <a id="whatsapp-breeder-btn" href="#" class="btn btn-success w-100 fw-bold mt-2 py-2" target="_blank">
+            <i class="fab fa-whatsapp me-2"></i> Chat with Breeder to Plan Pickup
+        </a>
+        
+        <p class="x-small text-secondary mt-3 mb-0">
+            <i class="fa-solid fa-circle-info me-1"></i> Please present this screenshot to the breeder at the kennel for verification.
+        </p>
+    </div>
+</div>
+
+</body>
+</html>

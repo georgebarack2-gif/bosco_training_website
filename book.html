@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bosco K9 - Book Session</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            background-image: url('signup.jpeg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .form-container {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 40px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 550px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+            color: white;
+        }
+
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 30px;
+            letter-spacing: 1px;
+            font-weight: 600;
+            color: #FFD700;
+        }
+
+        .form-container p.subtitle {
+            text-align: center;
+            font-size: 14px;
+            color: #ccc;
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            color: #FFD700;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+            padding-bottom: 5px;
+            font-weight: 500;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            background: #fff;
+            color: #000;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            box-shadow: 0 0 10px #FFD700;
+        }
+
+        .row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .row .col {
+            flex: 1;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: #25D366; /* M-Pesa Green styling */
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+        }
+
+        button:hover {
+            background: #20ba59;
+            transform: scale(1.02);
+        }
+
+        .login-note {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #bbb;
+        }
+
+        .login-note a {
+            color: #FFD700;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="form-container">
+        <h2>Book a Session</h2>
+        <p class="subtitle">Secure your training spot instantly via M-Pesa Express</p>
+
+        <form id="bookingForm">
+            
+            <div id="humanSection">
+                <div class="section-title">1. Owner Details</div>
+                <label>Full Name</label>
+                <input type="text" id="fullname" placeholder="Enter your full name">
+
+                <div class="row">
+                    <div class="col">
+                        <label>Email Address</label>
+                        <input type="email" id="email" placeholder="Enter email">
+                    </div>
+                    <div class="col">
+                        <label>Create Account Password</label>
+                        <input type="password" id="password" placeholder="Create password">
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-title">2. Dog Profile</div>
+            <div class="row">
+                <div class="col">
+                    <label>Dog's Name</label>
+                    <input type="text" id="dogName" placeholder="e.g. Max" required>
+                </div>
+                <div class="col">
+                    <label>Breed</label>
+                    <input type="text" id="dogBreed" placeholder="e.g. German Shepherd" required>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <label>Dog's Age</label>
+                    <input type="text" id="dogAge" placeholder="e.g. 8 months" required>
+                </div>
+                <div class="col">
+                    <label>Training Program</label>
+                    <select id="trainingType" required>
+                        <option value="Obedience">Basic Obedience</option>
+                        <option value="Agility">Agility Training</option>
+                        <option value="Protection">Protection Work</option>
+                        <option value="Behavioral">Behavioral Modification</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="section-title">3. Schedule & Payment</div>
+            <label>Select Date & Time</label>
+            <input type="datetime-local" id="sessionTime" required>
+
+            <label>M-Pesa Phone Number (For Payment Prompt)</label>
+            <input type="tel" id="mpesaPhone" placeholder="e.g. 0712345678" required>
+
+            <button type="submit">Pay KSH 1,500 via M-Pesa</button>
+        </form>
+
+        <div class="login-note" id="loginNote">
+            Already have an account? <a href="Login.html">Log In here</a> to book faster.
+        </div>
+    </div>
+
+    <script>
+        // Check if user is logged in
+        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        const humanSection = document.getElementById('humanSection');
+        const loginNote = document.getElementById('loginNote');
+
+        // If logged in, customize form presentation instantly
+        if (isLoggedIn) {
+            humanSection.style.display = 'none';
+            loginNote.style.display = 'none';
+        }
+
+        const form = document.getElementById('bookingForm');
+        form.addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            // Collect variables
+            const mpesaPhone = document.getElementById('mpesaPhone').value;
+            const sessionTime = document.getElementById('sessionTime').value;
+            const dogName = document.getElementById('dogName').value;
+            const dogBreed = document.getElementById('dogBreed').value;
+            const dogAge = document.getElementById('dogAge').value;
+            const trainingType = document.getElementById('trainingType').value;
+
+            let bookingData = {
+                mpesaPhone, sessionTime, dogName, dogBreed, dogAge, trainingType,
+                isLoggedIn: isLoggedIn,
+                amount: 1500 // Flat fixed class rate
+            };
+
+            // If guest, append account creation parameters
+            if (!isLoggedIn) {
+                bookingData.fullname = document.getElementById('fullname').value;
+                bookingData.email = document.getElementById('email').value;
+                bookingData.password = document.getElementById('password').value;
+
+                if(!bookingData.fullname || !bookingData.email || !bookingData.password) {
+                    alert("Please fill in your Owner details to create your account!");
+                    return;
+                }
+            } else {
+                // If logged in, pull existing owner data from browser cache
+                bookingData.email = localStorage.getItem('userEmail');
+                bookingData.fullname = localStorage.getItem('userName');
+            }
+
+            try {
+                // Send package to backend endpoint
+                const response = await fetch('http://localhost:3000/api/book-and-pay', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(bookingData)
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    alert("STK Push sent! Please check your phone to enter your M-Pesa PIN.");
+                    
+                    // Log them in locally if they were a guest registration
+                    if (!isLoggedIn) {
+                        localStorage.setItem('isLoggedIn', 'true');
+                        localStorage.setItem('userName', bookingData.fullname);
+                        localStorage.setItem('userEmail', bookingData.email);
+                    }
+                } else {
+                    alert(result.message);
+                }
+            } catch (error) {
+                console.error(error);
+                alert("Could not connect to server. Ensure your backend is running.");
+            }
+        });
+    </script>
+</body>
+</html>

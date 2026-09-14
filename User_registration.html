@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- Helps browser understand character types -->
+    <meta charset="UTF-8">
+
+    <!-- Makes website responsive on phones -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Title shown on browser tab -->
+    <title>Bosco K9 Sign Up</title>
+
+    <!-- GOOGLE FONT -->
+    <!-- Gives decorative premium font style -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+
+        /* Removes unwanted browser spacing */
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        /* Styles the whole page background */
+        body{
+            font-family:'Poppins', sans-serif;
+            height:100vh;
+
+            /* Background image */
+            background-image:url('signup.jpeg');
+
+            /* Makes image cover whole screen */
+            background-size:cover;
+
+            /* Prevents repeating */
+            background-repeat:no-repeat;
+
+            /* Centers image properly */
+            background-position:center;
+
+            /* Centers form vertically and horizontally */
+            display:flex;
+            justify-content:center;
+            align-items:center;
+        }
+
+        /* Main form container */
+        .form-container{
+
+            /* Transparent glass effect */
+            background:rgba(0,0,0,0.7);
+            
+
+            /* Space inside container */
+            padding:40px;
+
+            /* Rounded corners */
+            border-radius:20px;
+
+            /* Controls form width */
+            width:400px;
+
+            /* Shadow behind form */
+            box-shadow:0 8px 20px rgba(0,0,0,0.5);
+
+            /* White text */
+            color:white;
+        }
+
+        /* Main heading */
+        .form-container h1{
+
+            /* Centers heading */
+            text-align:center;
+
+            /* Space below heading */
+            margin-bottom:30px;
+
+            /* Font size */
+            font-size:32px;
+
+            /* Decorative spacing */
+            letter-spacing:2px;
+        }
+
+        /* Labels */
+        label{
+
+            /* Makes labels appear on own line */
+            display:block;
+
+            margin-bottom:8px;
+
+            font-weight:500;
+        }
+
+        /* Input boxes */
+        input{
+
+            /* Full width */
+            width:100%;
+
+            /* Space inside inputs */
+            padding:12px;
+
+            /* Space below each input */
+            margin-bottom:20px;
+
+            /* Removes default border */
+            border:none;
+
+            /* Rounded edges */
+            border-radius:8px;
+
+            /* Better font appearance */
+            font-size:16px;
+        }
+
+        /* Input focus effect */
+        input:focus{
+
+            /* Removes ugly blue browser outline */
+            outline:none;
+
+            /* Glow effect when typing */
+            box-shadow:0 0 10px #FFD700;
+        }
+
+        /* Submit button */
+        button{
+
+            width:100%;
+
+            padding:14px;
+
+            background:#FFD700;
+
+            color:black;
+
+            font-size:18px;
+
+            font-weight:bold;
+
+            border:none;
+
+            border-radius:8px;
+
+            cursor:pointer;
+
+            transition:0.3s;
+        }
+
+        /* Hover effect */
+        button:hover{
+
+            background:#ffcc00;
+
+            transform:scale(1.03);
+        }
+
+        /* Small login text */
+        .login-text{
+
+            text-align:center;
+
+            margin-top:20px;
+        }
+
+        /* Login link */
+        .login-text a{
+
+            color:#FFD700;
+
+            text-decoration:none;
+        }
+
+        .login-text a:hover{
+
+            text-decoration:underline;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Main signup form -->
+    <div class="form-container">
+
+        <!-- Form heading -->
+        <h2>Create Account</h2>
+
+        <!-- Form starts -->
+        <form>
+
+            <!-- Full Name -->
+            <label>Full Name</label>
+
+            <input type="text"
+                   name="fullname"
+                   placeholder="Enter your full name"
+                   required>
+
+            <!-- Email -->
+            <label>Email Address</label>
+
+            <input type="email"
+                   name="email"
+                   placeholder="Enter your email"
+                   required>
+
+            <!-- Phone -->
+            <label>Phone Number</label>
+
+            <input type="tel"
+                   name="phone"
+                   pattern="(\+254|0)[0-9]{9}"
+                   placeholder="e.g +254712345678 or 0712345678"
+                   required>
+
+            <!-- Password -->
+            <label>Password</label>
+
+            <input type="password"
+                   name="password"
+                   placeholder="Create password"
+                   required>
+
+            <!-- Confirm Password -->
+            <label>Confirm Password</label>
+
+            <input type="password"
+                   name="confirm_password"
+                   placeholder="Confirm password"
+                   required>
+
+            <!-- Submit button -->
+            <button type="submit">
+
+                Sign Up
+
+            </button>
+
+        </form>
+
+        <!-- Login redirect text -->
+        <div class="login-text">
+
+            Already have an account?
+
+            <a href="#">Login</a>
+
+        </div>
+
+    </div>
+    <script>
+    // 1. Grab the form element from the page
+    const form = document.querySelector('form');
+
+    // 2. Listen for when the user clicks the "Sign Up" button
+    form.addEventListener('submit', async function(event) {
+        event.preventDefault(); // Stop the page from reloading automatically
+
+        // Get the values typed into the input boxes
+        const fullname = form.fullname.value;
+        const email = form.email.value;
+        const phone = form.phone.value;
+        const password = form.password.value;
+        const confirmPassword = form.confirm_password.value;
+
+        // Basic front-end check: match passwords
+        if (password !== confirmPassword) {
+            alert('Passwords do not match!');
+            return;
+        }
+
+        // Combine the inputs into a single data package
+        const formData = { fullname, email, phone, password };
+
+        try {
+            // 3. Send the data package over to your running Node.js server
+            const response = await fetch('http://localhost:3000/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData) // Turn data into text strings for transmission
+            });
+
+            // Read the message returned by the server
+            const result = await response.json();
+
+            if (response.ok) {
+                alert(result.message); // Displays "Registration successful!"
+                form.reset();          // Clears the text fields automatically
+            } else {
+                alert(result.message); // Displays errors like "Email already registered!"
+            }
+
+        } catch (error) {
+            console.error('Connection Error:', error);
+            alert('Could not connect to the backend server. Make sure your command prompt server is still running!');
+        }
+    });
+</script>
+</body>
+
+</html>

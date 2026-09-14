@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bosco Training Centre – Buy & Train Dogs in Nairobi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:   #111111;
+      --dark:    #1a1a1a;
+      --card:    #222222;
+      --border:  #2e2e2e;
+      --yellow:  #f5c518;
+      --yellow2: #d4a800;
+      --green:   #25d366;
+      --white:   #ffffff;
+      --muted:   #888888;
+      --text:    #e5e5e5;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--black); color: var(--text); }
+    a { text-decoration: none; }
+
+    /* ── NAV ── */
+    nav {
+      display: flex; align-items: center;
+      background: #1c1c1c;
+      border-bottom: 2px solid var(--yellow);
+      padding: 0 2rem; height: 72px;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 12px; margin-right: auto; }
+    .nav-logo img {
+      height: 52px; width: 52px;
+      background: #fff; border-radius: 6px;
+      object-fit: contain; padding: 4px;
+    }
+    .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--text);
+      font-size: 0.9rem; font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--yellow); }
+    .nav-links a.buy-dog {
+      color: var(--yellow); border-bottom: 1.5px solid var(--yellow);
+      padding-bottom: 2px;
+    }
+    .nav-cta {
+    color: #000000 !important;
+}
+    .nav-cta {
+      margin-left: 2rem;
+      background: var(--yellow); color: #111;
+      border: none; border-radius: 6px;
+      padding: 0.6rem 1.4rem;
+      font-size: 0.9rem; font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--yellow2); }
+
+    /* Services dropdown, ported from the Bootstrap nav so all real
+       service links keep working (all currently point to "#" in the
+       source file — wire these to real pages/anchors when they exist) */
+    .nav-item-dropdown { position: relative; }
+    .dropdown-toggle-custom {
+      color: var(--text); font-size: 0.9rem; font-weight: 500;
+      background: none; border: none; cursor: pointer;
+      font-family: 'Inter', sans-serif; display: flex; align-items: center; gap: 4px;
+      padding: 0;
+    }
+    .dropdown-toggle-custom:hover { color: var(--yellow); }
+    .dropdown-menu-custom {
+      position: absolute; top: calc(100% + 14px); left: 0;
+      background: #1c1c1c; border: 1px solid var(--border);
+      border-radius: 8px; min-width: 200px;
+      padding: 0.4rem 0; display: none; z-index: 200;
+    }
+    .nav-item-dropdown:hover .dropdown-menu-custom { display: block; }
+    .dropdown-menu-custom a {
+      display: block; padding: 0.5rem 1rem;
+      font-size: 0.85rem; color: var(--text);
+    }
+    .dropdown-menu-custom a:hover { background: #262200; color: var(--yellow); }
+    .dropdown-menu-custom hr { border-color: var(--border); margin: 0.3rem 0; }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative; min-height: 520px;
+      display: flex; align-items: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: url('https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=1400&q=80') center/cover no-repeat;
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(90deg, rgba(0,0,0,0.82) 45%, rgba(0,0,0,0.2) 100%);
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      padding: 4rem 3rem; max-width: 580px;
+    }
+    .hero-eyebrow {
+      font-size: 12px; color: var(--yellow);
+      margin-bottom: 1rem; font-weight: 600;
+    }
+    .hero-title {
+      font-size: 2.6rem; font-weight: 700;
+      color: #fff; line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+    .hero-title em { color: var(--yellow); font-style: normal; }
+    .hero-sub {
+      font-size: 1rem; color: rgba(255,255,255,0.65);
+      margin-bottom: 2rem; line-height: 1.6; max-width: 420px;
+    }
+    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn-yellow {
+      background: var(--yellow); color: #111;
+      border: none; border-radius: 6px;
+      padding: 0.75rem 1.6rem;
+      font-size: 0.95rem; font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-yellow:hover { background: var(--yellow2); }
+    .btn-ghost {
+      background: transparent; color: #fff;
+      border: 1.5px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      padding: 0.75rem 1.6rem;
+      font-size: 0.95rem; font-weight: 500;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-ghost:hover { border-color: var(--yellow); color: var(--yellow); }
+    .btn-whatsapp {
+      background: var(--green); color: #fff;
+      border: none; border-radius: 6px;
+      padding: 0.75rem 1.4rem;
+      font-size: 0.9rem; font-weight: 600;
+      cursor: pointer;
+      display: inline-flex; align-items: center; gap: 8px;
+      transition: opacity 0.2s;
+    }
+    .btn-whatsapp:hover { opacity: 0.85; }
+
+    /* ── TRUST BAR ── */
+    .trust-bar {
+      background: #161616;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 1.25rem 3rem;
+      display: flex; justify-content: center;
+      gap: 3rem; flex-wrap: wrap;
+    }
+    .trust-item { text-align: center; }
+    .trust-num { font-size: 1.5rem; font-weight: 700; color: var(--yellow); display: block; }
+    .trust-label { font-size: 0.75rem; color: var(--muted); }
+
+    /* ── SECTIONS ── */
+    section { padding: 4rem 3rem; }
+    .section-eyebrow { font-size: 12px; color: var(--yellow); font-weight: 600; margin-bottom: 0.5rem; }
+    .section-title { font-size: 1.8rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem; }
+    .section-sub { font-size: 0.95rem; color: var(--muted); margin-bottom: 2.5rem; max-width: 520px; }
+
+    /* ── AI BREED FINDER ── */
+    .finder-wrap {
+      background: var(--dark);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      max-width: 700px;
+    }
+    .finder-top {
+      background: #1e1e1e;
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 1.25rem;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .finder-icon-wrap {
+      width: 36px; height: 36px;
+      background: rgba(245,197,24,0.12);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+    }
+    .finder-top-text h3 { font-size: 0.9rem; color: #fff; font-weight: 600; }
+    .finder-top-text p { font-size: 0.75rem; color: var(--muted); }
+    .ai-pill {
+      margin-left: auto;
+      font-size: 10px; padding: 3px 10px;
+      background: rgba(245,197,24,0.1);
+      color: var(--yellow);
+      border: 1px solid rgba(245,197,24,0.25);
+      border-radius: 20px; font-weight: 600;
+    }
+
+    .chat-body { padding: 1rem; min-height: 180px; display: flex; flex-direction: column; gap: 10px; }
+    .bubble-row { display: flex; gap: 8px; align-items: flex-start; }
+    .bubble-row.user { flex-direction: row-reverse; }
+    .avatar {
+      width: 30px; height: 30px; border-radius: 50%;
+      background: var(--yellow);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; color: #111; font-weight: 700;
+      flex-shrink: 0;
+    }
+    .bubble-row.user .avatar { background: #2a2a2a; color: var(--yellow); font-size: 10px; }
+    .bubble {
+      max-width: 78%; padding: 0.6rem 0.9rem;
+      border-radius: 12px; font-size: 0.875rem; line-height: 1.55;
+      background: #2a2a2a; color: var(--text); border: 1px solid var(--border);
+    }
+    .bubble-row.user .bubble { background: #2b2500; color: #fff; border-color: rgba(245,197,24,0.3); }
+
+    .opts-row { padding: 0 1rem 0.5rem; display: flex; gap: 8px; flex-wrap: wrap; }
+    .opt {
+      padding: 0.4rem 1rem; border-radius: 20px;
+      border: 1px solid var(--border); background: transparent; color: var(--text);
+      font-size: 0.8rem; cursor: pointer; transition: all 0.15s; font-family: 'Inter', sans-serif;
+    }
+    .opt:hover { border-color: var(--yellow); color: var(--yellow); }
+    .opt.picked { border-color: var(--yellow); background: rgba(245,197,24,0.08); color: var(--yellow); }
+
+    .progress-dots { display: flex; gap: 5px; justify-content: center; padding: 0.5rem 0; }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--border); transition: background 0.2s; }
+    .dot.on { background: var(--yellow); }
+
+    .chat-input-row { display: flex; gap: 8px; padding: 0.75rem 1rem; border-top: 1px solid var(--border); }
+    .chat-input-row input {
+      flex: 1; background: #2a2a2a; border: 1px solid var(--border); border-radius: 8px;
+      color: var(--text); padding: 0.55rem 0.85rem; font-size: 0.875rem;
+      font-family: 'Inter', sans-serif; outline: none;
+    }
+    .chat-input-row input:focus { border-color: var(--yellow); }
+    .chat-send {
+      background: var(--yellow); color: #111; border: none; border-radius: 8px;
+      padding: 0 1.1rem; font-size: 0.85rem; font-weight: 700; cursor: pointer;
+      font-family: 'Inter', sans-serif; transition: background 0.2s;
+    }
+    .chat-send:hover { background: var(--yellow2); }
+    .chat-send:disabled { background: var(--border); color: var(--muted); cursor: not-allowed; }
+
+    .result-box {
+      margin: 0 1rem 1rem; background: #1a1a00;
+      border: 1px solid rgba(245,197,24,0.3); border-radius: 12px; overflow: hidden; display: none;
+    }
+    .result-box.show { display: block; }
+    .result-top-bar {
+      background: #2b2500; padding: 0.85rem 1.1rem;
+      display: flex; align-items: center; gap: 12px; border-bottom: 1px solid rgba(245,197,24,0.2);
+    }
+    .breed-emoji { font-size: 2rem; }
+    .breed-name { font-size: 1rem; font-weight: 700; color: #fff; }
+    .breed-pct { font-size: 0.75rem; color: var(--yellow); }
+    .result-body { padding: 0.85rem 1.1rem; }
+    .result-body p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; margin-bottom: 1rem; }
+    .result-cta {
+      width: 100%; background: var(--yellow); color: #111; border: none; border-radius: 8px;
+      padding: 0.7rem; font-size: 0.9rem; font-weight: 700; cursor: pointer;
+      font-family: 'Inter', sans-serif; transition: background 0.2s;
+    }
+    .result-cta:hover { background: var(--yellow2); }
+
+    /* ── DOG LISTINGS ── */
+    .dogs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 16px; }
+    .dog-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+      overflow: hidden; cursor: pointer; transition: border-color 0.2s, transform 0.2s;
+    }
+    .dog-card:hover { border-color: var(--yellow); transform: translateY(-2px); }
+    .dog-thumb { height: 120px; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; }
+    .dog-thumb.c1 { background: #1a2a1a; }
+    .dog-thumb.c2 { background: #2a2a1a; }
+    .dog-thumb.c3 { background: #1a1a2a; }
+    .dog-thumb.c4 { background: #2a1a1a; }
+    .dog-info { padding: 0.75rem; }
+    .dog-breed-name { font-size: 0.875rem; font-weight: 600; color: #fff; }
+    .dog-price { font-size: 0.875rem; color: var(--yellow); font-weight: 700; margin-top: 2px; }
+    .dog-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 6px; }
+    .dog-tag { font-size: 10px; padding: 2px 7px; background: rgba(245,197,24,0.1); color: var(--yellow); border-radius: 4px; }
+    .dog-loc { font-size: 11px; color: var(--muted); margin-top: 5px; }
+    .buy-btn {
+      width: 100%; margin-top: 8px; background: var(--yellow); color: #111; border: none;
+      border-radius: 6px; padding: 0.5rem; font-size: 0.8rem; font-weight: 700; cursor: pointer;
+      font-family: 'Inter', sans-serif; transition: background 0.2s;
+    }
+    .buy-btn:hover { background: var(--yellow2); }
+
+    /* ── SERVICES ── */
+    .services-section {
+      background: #161616; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    }
+    .services-intro { text-align: center; max-width: 640px; margin: 0 auto 2.5rem; }
+    .services-intro h2 { font-size: 2rem; font-weight: 700; color: #fff; margin-bottom: 0.75rem; }
+    .services-intro p { font-size: 0.95rem; color: var(--muted); line-height: 1.6; }
+
+    .services-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px; max-width: 900px; margin: 0 auto;
+    }
+    .service-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+      overflow: hidden; transition: border-color 0.2s, transform 0.2s;
+    }
+    .service-card:hover { border-color: var(--yellow); transform: translateY(-2px); }
+    .service-img { height: 110px; width: 100%; object-fit: cover; display: block; background: #2a2a2a; }
+    .service-body { padding: 1rem; }
+    .service-name { font-size: 0.9rem; font-weight: 600; color: #fff; margin-bottom: 0.6rem; }
+    .service-link {
+      display: block; text-align: center; font-size: 0.8rem; font-weight: 700;
+      color: #111; background: var(--yellow); padding: 0.45rem; border-radius: 6px;
+      transition: background 0.2s;
+    }
+    .service-link:hover { background: var(--yellow2); }
+    .service-badge {
+      display: inline-block; font-size: 0.75rem; font-weight: 700; color: #111;
+      background: var(--yellow); padding: 0.35rem 0.7rem; border-radius: 6px;
+    }
+
+    /* ── FOOTER ── */
+    footer { background: #111; border-top: 2px solid var(--yellow); padding: 3rem; }
+    .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 2rem; margin-bottom: 2rem; }
+    .footer-col h4 { font-size: 0.85rem; font-weight: 700; color: var(--yellow); margin-bottom: 0.75rem; }
+    .footer-col p, .footer-col a { font-size: 0.82rem; color: var(--muted); line-height: 1.8; display: block; }
+    .footer-col a:hover { color: var(--yellow); }
+    .footer-contact-line { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 4px; }
+    .footer-contact-line i { color: var(--yellow); margin-top: 2px; }
+    .footer-newsletter input {
+      width: 100%; background: #1f1f1f; border: 1px solid var(--border); border-radius: 6px;
+      color: var(--text); padding: 0.55rem 0.75rem; font-size: 0.85rem; margin-bottom: 0.6rem;
+      font-family: 'Inter', sans-serif; outline: none;
+    }
+    .footer-newsletter input:focus { border-color: var(--yellow); }
+    .footer-newsletter button {
+      width: 100%; background: var(--yellow); color: #111; border: none; border-radius: 6px;
+      padding: 0.55rem; font-size: 0.85rem; font-weight: 700; cursor: pointer;
+      font-family: 'Inter', sans-serif; transition: background 0.2s;
+    }
+    .footer-newsletter button:hover { background: var(--yellow2); }
+    .footer-bottom {
+      border-top: 1px solid var(--border); padding-top: 1.25rem;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;
+    }
+    .footer-bottom p { font-size: 0.78rem; color: var(--muted); }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════ NAV ═══════════════
+     Links restored to the real multi-page structure (index.html,
+     buy.html, about.html, login.html, book.html) and the real logo
+     file (train.jpeg), matching the site you already built. -->
+<nav>
+  <a class="nav-logo" href="index.html">
+    <img src="train.jpeg" alt="Bosco Training Centre logo">
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li class="nav-item-dropdown">
+      <button class="dropdown-toggle-custom">Services Offered <i class="bi bi-chevron-down" style="font-size:11px;"></i></button>
+      <div class="dropdown-menu-custom">
+        <a href="#services">Mating Services</a>
+        <a href="#services">Puppy Training</a>
+        <a href="#services">Obedience</a>
+        <a href="#services">Grooming</a>
+        <a href="#services">Socialization</a>
+        <a href="#services">Aggression</a>
+        <a href="#services">Boarding</a>
+        <hr>
+        <a href="#services">All round training</a>
+      </div>
+    </li>
+    <a href="buy.html" class="nav-cta">Buy a dog</a>
+    <li><a href="about.html">About Us</a></li>
+    <li><a href="login.html">Login</a></li>
+  </ul>
+  <a href="book.html" class="nav-cta">Book Session</a>
+</nav>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Nairobi's #1 dog platform</p>
+    <h1 class="hero-title">Find, buy &amp; train<br>your perfect <em>dog</em><br>in Nairobi.</h1>
+    <p class="hero-sub">Browse verified breeders, get AI-matched to your ideal breed, and book professional training — all in one place.</p>
+    <div class="hero-btns">
+      <a href="buy.html" class="btn-yellow">Browse dogs for sale</a>
+      <a href="#ai-finder" class="btn-ghost">Find my breed with AI</a>
+      <a href="https://wa.me/254789517255?text=Hello%20Bosco%20K9,%20I%20would%20like%20to%20find%20out%20more."
+         class="btn-whatsapp" target="_blank">
+        <i class="bi bi-whatsapp"></i> Chat on WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ TRUST BAR ═══════════════
+     PLACEHOLDER NUMBERS — these were not in either of your source
+     files, so they are not real figures. Swap in your actual counts
+     (or pull them live from your dogs/breeders tables) before launch. -->
+<div class="trust-bar">
+  <div class="trust-item"><span class="trust-num">—</span><span class="trust-label">Dogs sold</span></div>
+  <div class="trust-item"><span class="trust-num">—</span><span class="trust-label">Verified breeders</span></div>
+  <div class="trust-item"><span class="trust-num">—</span><span class="trust-label">Breeds available</span></div>
+  <div class="trust-item"><span class="trust-num">M-Pesa</span><span class="trust-label">Accepted</span></div>
+  <div class="trust-item"><span class="trust-num">Nairobi</span><span class="trust-label">Based & verified</span></div>
+</div>
+
+<!-- ═══════════════ AI BREED FINDER ═══════════════ -->
+<section id="ai-finder" style="background: #131313;">
+  <p class="section-eyebrow">AI-powered</p>
+  <h2 class="section-title">Not sure which breed fits you?</h2>
+  <p class="section-sub">Answer 4 quick questions. Our AI matches you to the right dog for your home, lifestyle, and experience level.</p>
+
+  <div class="finder-wrap">
+    <div class="finder-top">
+      <div class="finder-icon-wrap">🤖</div>
+      <div class="finder-top-text">
+        <h3>Bosco Breed Advisor</h3>
+        <p>AI-powered · Takes under 1 minute</p>
+      </div>
+      <span class="ai-pill">AI</span>
+    </div>
+
+    <div class="chat-body" id="chatBody">
+      <div class="bubble-row">
+        <div class="avatar">B</div>
+        <div class="bubble">Hi! I'll find your perfect dog match. First — what's your living situation in Nairobi?</div>
+      </div>
+    </div>
+
+    <div class="opts-row" id="optsRow"></div>
+
+    <div class="progress-dots" id="dots">
+      <div class="dot on" id="dt0"></div>
+      <div class="dot" id="dt1"></div>
+      <div class="dot" id="dt2"></div>
+      <div class="dot" id="dt3"></div>
+      <div class="dot" id="dt4"></div>
+    </div>
+
+    <div class="chat-input-row">
+      <input id="typeInput" type="text" placeholder="Or type your answer…" onkeydown="if(event.key==='Enter')doSend()"/>
+      <button class="chat-send" id="sendBtn" onclick="doSend()">Send</button>
+    </div>
+  </div>
+
+  <div class="result-box" id="resultBox">
+    <div class="result-top-bar">
+      <div class="breed-emoji" id="rEmoji">🐕</div>
+      <div>
+        <div class="breed-name" id="rBreed">German Shepherd</div>
+        <div class="breed-pct" id="rPct">Match for your lifestyle</div>
+      </div>
+    </div>
+    <div class="result-body">
+      <p id="rDesc"></p>
+      <button class="result-cta" id="rCta" onclick="location.href='buy.html'">View available dogs →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ DOG LISTINGS ═══════════════
+     Placeholder inventory carried over as-is from the draft — wire
+     this grid to your real dogs table (same one buy.html reads from)
+     instead of this static markup. -->
+<section id="listings">
+  <p class="section-eyebrow">Available now</p>
+  <h2 class="section-title">Dogs for sale in Nairobi</h2>
+  <p class="section-sub">All sellers verified. M-Pesa accepted. Delivery within Nairobi available.</p>
+
+  <div class="dogs-grid">
+    <div class="dog-card">
+      <div class="dog-thumb c1">🐕</div>
+      <div class="dog-info">
+        <div class="dog-breed-name">German Shepherd</div>
+        <div class="dog-price">Ksh 35,000</div>
+        <div class="dog-tags"><span class="dog-tag">Guard dog</span><span class="dog-tag">Trained</span></div>
+        <div class="dog-loc">📍 Westlands, Nairobi</div>
+        <button class="buy-btn">Buy via M-Pesa</button>
+      </div>
+    </div>
+    <div class="dog-card">
+      <div class="dog-thumb c2">🐩</div>
+      <div class="dog-info">
+        <div class="dog-breed-name">Maltese</div>
+        <div class="dog-price">Ksh 28,000</div>
+        <div class="dog-tags"><span class="dog-tag">Apartment</span><span class="dog-tag">Friendly</span></div>
+        <div class="dog-loc">📍 Kilimani, Nairobi</div>
+        <button class="buy-btn">Buy via M-Pesa</button>
+      </div>
+    </div>
+    <div class="dog-card">
+      <div class="dog-thumb c3">🦮</div>
+      <div class="dog-info">
+        <div class="dog-breed-name">Labrador Retriever</div>
+        <div class="dog-price">Ksh 40,000</div>
+        <div class="dog-tags"><span class="dog-tag">Family dog</span><span class="dog-tag">Gentle</span></div>
+        <div class="dog-loc">📍 Karen, Nairobi</div>
+        <button class="buy-btn">Buy via M-Pesa</button>
+      </div>
+    </div>
+    <div class="dog-card">
+      <div class="dog-thumb c4">🐾</div>
+      <div class="dog-info">
+        <div class="dog-breed-name">Rottweiler</div>
+        <div class="dog-price">Ksh 45,000</div>
+        <div class="dog-tags"><span class="dog-tag">Guard dog</span><span class="dog-tag">Strong</span></div>
+        <div class="dog-loc">📍 Ruiru, Nairobi</div>
+        <button class="buy-btn">Buy via M-Pesa</button>
+      </div>
+    </div>
+    <div class="dog-card">
+      <div class="dog-thumb c1">🐶</div>
+      <div class="dog-info">
+        <div class="dog-breed-name">French Bulldog</div>
+        <div class="dog-price">Ksh 55,000</div>
+        <div class="dog-tags"><span class="dog-tag">Compact</span><span class="dog-tag">Playful</span></div>
+        <div class="dog-loc">📍 Lavington, Nairobi</div>
+        <button class="buy-btn">Buy via M-Pesa</button>
+      </div>
+    </div>
+    <div class="dog-card">
+      <div class="dog-thumb c2">🐕‍🦺</div>
+      <div class="dog-info">
+        <div class="dog-breed-name">Border Collie</div>
+        <div class="dog-price">Ksh 38,000</div>
+        <div class="dog-tags"><span class="dog-tag">Active</span><span class="dog-tag">Intelligent</span></div>
+        <div class="dog-loc">📍 Langata, Nairobi</div>
+        <button class="buy-btn">Buy via M-Pesa</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ SERVICES ═══════════════
+     Your six real service cards (with your real image filenames),
+     restyled to match the dark theme instead of Bootstrap's white
+     cards. "Learn more" links point to "#" because that's what they
+     pointed to in your original file — replace with real service
+     pages/anchors when those exist. -->
+<div class="services-section" id="services">
+  <section style="padding-bottom: 0;">
+    <div class="services-intro">
+      <p class="section-eyebrow" style="text-align:center;">Better training · Stronger bonds</p>
+      <h2>We do not just train dogs — we build relationships</h2>
+      <p>Professional dog training designed to create balanced behaviors and stronger bonds between owners and their companions.</p>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card">
+        <img src="mating.jpeg" alt="Mating Services" class="service-img">
+        <div class="service-body">
+          <div class="service-name">Mating Services ❤️</div>
+          <a href="#" class="service-link">Learn more</a>
+        </div>
+      </div>
+      <div class="service-card">
+        <img src="pup.jpeg" alt="Puppy Training" class="service-img">
+        <div class="service-body">
+          <div class="service-name">Puppy Training</div>
+          <a href="#" class="service-link">Learn more</a>
+        </div>
+      </div>
+      <div class="service-card">
+        <img src="icegsd.jpeg" alt="Aggression Training" class="service-img">
+        <div class="service-body">
+          <div class="service-name">Aggression Training</div>
+          <a href="#" class="service-link">Learn more</a>
+        </div>
+      </div>
+      <div class="service-card">
+        <img src="stray.png" alt="Boarding Services" class="service-img">
+        <div class="service-body">
+          <div class="service-name">Boarding Services</div>
+          <a href="#" class="service-link">Learn more</a>
+        </div>
+      </div>
+      <div class="service-card">
+        <img src="logo.jpeg" alt="Obedience Training" class="service-img">
+        <div class="service-body">
+          <div class="service-name">Obedience Training</div>
+          <a href="#" class="service-link">Learn more</a>
+        </div>
+      </div>
+      <div class="service-card">
+        <img src="gsd2.jpeg" alt="Grooming Services" class="service-img">
+        <div class="service-body">
+          <div class="service-name">Grooming Services</div>
+          <span class="service-badge">Vet proven</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════════ FOOTER ═══════════════
+     Real contact details, quick links, and service list restored
+     from your original footer (phone, email, hours all match what
+     you had — the placeholder ones from the draft are removed). -->
+<footer id="about">
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>Bosco</h4>
+      <p>Professional dog training that creates well-behaved dogs and deeper bonds.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <a href="index.html">Home</a>
+      <a href="#services">Services</a>
+      <a href="about.html">About Us</a>
+      <a href="book.html">Book Training</a>
+      <a href="login.html">Login</a>
+    </div>
+    <div class="footer-col">
+      <h4>Our Services</h4>
+      <a href="#services">Puppy Training</a>
+      <a href="#services">Obedience Training</a>
+      <a href="#services">Behavior Modification</a>
+      <a href="#services">Grooming</a>
+      <a href="#services">Boarding</a>
+      <a href="#services">Mating Services</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contact Us</h4>
+      <div class="footer-contact-line"><i class="bi bi-telephone"></i><span>+254 700 415115</span></div>
+      <div class="footer-contact-line"><i class="bi bi-envelope"></i><span>info@boscotraining.co.ke</span></div>
+      <div class="footer-contact-line"><i class="bi bi-geo-alt"></i><span>Nairobi, Kenya</span></div>
+      <div class="footer-contact-line"><i class="bi bi-clock"></i><span>Mon – Sat: 8:00 AM – 6:00 PM</span></div>
+    </div>
+    <div class="footer-col footer-newsletter">
+      <h4>Newsletter</h4>
+      <p style="margin-bottom:0.75rem;">Get training tips and updates straight to your inbox.</p>
+      <input type="email" placeholder="Your email address">
+      <button type="button">Subscribe</button>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2026 Bosco Training Centre. All Rights Reserved.</p>
+  </div>
+</footer>
+
+<!-- ═══════════════ AI BREED FINDER LOGIC ═══════════════ -->
+<script>
+const steps = [
+  { q: "How active is your daily lifestyle?", opts: ["Very active — I run/hike daily", "Moderate — regular walks", "Low — mostly indoors"] },
+  { q: "Who lives in your household?", opts: ["Just me", "Couple", "Family with young kids", "Elderly family members"] },
+  { q: "Main reason you want a dog?", opts: ["Companionship", "Home security / guard", "Both equally"] }
+];
+
+const breeds = {
+  guard:      { emoji:"🐕", name:"German Shepherd",    pct:"Strong match", desc:"Loyal, courageous, and highly trainable. Suited to compound living and home security. Thrives with regular exercise and a firm but kind owner." },
+  family:     { emoji:"🦮", name:"Labrador Retriever",  pct:"Strong match", desc:"Gentle, patient, and good with children. One of the most adaptable family dogs. Easy to train, even for first-time owners." },
+  apartment:  { emoji:"🐩", name:"Maltese",             pct:"Strong match", desc:"Compact and affectionate — well suited for apartment life in Nairobi. Low exercise needs but thrives on human companionship." },
+  active:     { emoji:"🐕‍🦺", name:"Border Collie",   pct:"Strong match", desc:"Highly intelligent and energetic. Ideal for active owners with space. Needs daily mental and physical stimulation to stay well-behaved." },
+  senior:     { emoji:"🐶", name:"Cavalier King Charles", pct:"Strong match", desc:"Calm, gentle, and undemanding. Well suited to quieter households and elderly family members." }
+};
+
+let step = 0;
+let answers = [];
+
+function setOpts(opts) {
+  const row = document.getElementById('optsRow');
+  row.innerHTML = '';
+  opts.forEach(o => {
+    const b = document.createElement('button');
+    b.className = 'opt';
+    b.textContent = o;
+    b.onclick = () => choose(b, o);
+    row.appendChild(b);
+  });
+}
+
+function addBubble(text, isUser) {
+  const body = document.getElementById('chatBody');
+  const row = document.createElement('div');
+  row.className = 'bubble-row' + (isUser ? ' user' : '');
+  row.innerHTML = isUser
+    ? `<div class="avatar" style="background:#2a2500;color:var(--yellow);font-size:10px;">You</div><div class="bubble">${text}</div>`
+    : `<div class="avatar">B</div><div class="bubble">${text}</div>`;
+  body.appendChild(row);
+  body.scrollTop = body.scrollHeight;
+}
+
+function updateDots(n) {
+  for (let i = 0; i <= 4; i++) {
+    document.getElementById('dt' + i).className = 'dot' + (i <= n ? ' on' : '');
+  }
+}
+
+function choose(btn, val) {
+  document.querySelectorAll('.opt').forEach(b => b.classList.remove('picked'));
+  btn.classList.add('picked');
+  setTimeout(() => advance(val), 280);
+}
+
+function doSend() {
+  const inp = document.getElementById('typeInput');
+  const v = inp.value.trim();
+  if (!v) return;
+  inp.value = '';
+  advance(v);
+}
+
+function advance(val) {
+  addBubble(val, true);
+  answers.push(val.toLowerCase());
+  step++;
+  updateDots(step);
+
+  if (step < steps.length) {
+    setTimeout(() => {
+      addBubble(steps[step].q, false);
+      setOpts(steps[step].opts);
+    }, 500);
+  } else {
+    document.getElementById('optsRow').innerHTML = '';
+    document.getElementById('typeInput').disabled = true;
+    document.getElementById('sendBtn').disabled = true;
+    addBubble("Perfect — finding your best breed match now…", false);
+    setTimeout(showResult, 1100);
+  }
+}
+
+function showResult() {
+  const all = answers.join(' ');
+  let key = 'family';
+  if (all.includes('guard') || all.includes('security')) key = 'guard';
+  else if (all.includes('apartment') || all.includes('small')) key = 'apartment';
+  else if (all.includes('active') || all.includes('run') || all.includes('hike')) key = 'active';
+  else if (all.includes('elderly') || all.includes('senior')) key = 'senior';
+
+  const r = breeds[key];
+  document.getElementById('rEmoji').textContent = r.emoji;
+  document.getElementById('rBreed').textContent = r.name;
+  document.getElementById('rPct').textContent = r.pct + ' for your lifestyle';
+  document.getElementById('rDesc').textContent = r.desc;
+  document.getElementById('rCta').textContent = 'View available dogs →';
+  document.getElementById('resultBox').className = 'result-box show';
+  document.getElementById('resultBox').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  updateDots(4);
+}
+
+setOpts(["Small apartment", "Gated compound", "Standalone house", "Rural home"]);
+</script>
+
+</body>
+</html>
